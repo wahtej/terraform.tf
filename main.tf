@@ -116,10 +116,10 @@ resource "null_resource" "inventory_creation" {
   ]
   provisioner "local-exec" {
     command = <<EOT
-cat <<EOF > /etc/ansible/hosts
+sudo -S sh -c 'cat <<EOF > /etc/ansible/hosts
 k8s_master ansible_host=${aws_instance.k8s_master.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/k8s.pem ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
 k8s_node1 ansible_host=${aws_instance.k8s_node1.public_ip} ansible_user=ubuntu ansible_ssh_private_key_file=/home/ubuntu/k8s.pem ansible_ssh_extra_args='-o StrictHostKeyChecking=no'
-EOF
+EOF'
     EOT
   }
 }
