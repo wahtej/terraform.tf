@@ -1,5 +1,7 @@
 ---
-- hosts: all
+- hosts:
+    - k8s_master
+    - k8s_node1
   become: yes
   tasks:
    - name: Docker Installation
