@@ -21,6 +21,7 @@
   tasks:
     - name: join cluster
       shell: "{{ hostvars['DUMMY_HOST']['JOIN_COMMAND'] }} >> node_joined.txt"
+      ignore_errors: yes
       args:
         chdir: $HOME
       register: join_output
