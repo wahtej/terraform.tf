@@ -122,6 +122,7 @@ k8s_node1 ansible_host=${aws_instance.k8s_node1.public_ip} ansible_user=ubuntu a
 EOF
     EOT
   }
+}
   
   
 
