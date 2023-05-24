@@ -5,14 +5,15 @@
     - name: get join command
       shell: kubeadm token create --print-join-command
       register: join_command_raw
-      async: 360 
-      poll: 0
+    
 
 
     - name: Register dummy host with variable It Access In Next Play
       add_host:
         name: "DUMMY_HOST"
-        JOIN_COMMAND: "{{ join_command_raw }}"
+        JOIN_COMMAND: "{{ join_command_raw.stdout }}"
+      vars:
+        ansible_connection: local
 
 
 - hosts: k8s_node1 
@@ -22,5 +23,5 @@
       shell: "{{ hostvars['DUMMY_HOST']['JOIN_COMMAND'] }} >> node_joined.txt"
       args:
         chdir: $HOME
-        creates: node_joined.txt
-      register: join_command_result
+      register: join_output
+      changed_when: join_output.stdout != ""
